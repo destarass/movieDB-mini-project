@@ -1,0 +1,30 @@
+.homepage {
+  padding-top: 30px;
+}
+.GambarPosterUtama {
+  width: 600px;
+  height: auto;
+}
+.posterutama {
+  margin: auto;
+  text-align: center;
+}
+.JudulPosterUtama {
+  font-weight: 600;
+  font-size: 20px;
+}
+.kuningplay {
+  font-size: 30px;
+  color: white;
+}
+
+.JudulMovies {
+  font-weight: bolder;
+}
+
+.JudulTrendingPerson {
+  color: #5a606b;
+}
+/* .Bintang_Rating {
+  color: #f4c10f !important;
+} */
