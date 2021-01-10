@@ -1,10 +1,32 @@
+/* Halaman Utama */
+.ButtonBuy {
+  text-align: center !important;
+  margin: 0 !important;
+  margin-top: 10px !important;
+}
+.BuyButtom {
+  width: 100px;
+  color: black;
+  font-weight: 1000;
+}
+
+.card {
+  background-color: transparent;
+  transition: 0.3s ease-in-out;
+}
+.card:hover {
+  transform: scale(1.08);
+  transition: 0.3s ease-in-out;
+}
+
+.judulgenre {
+  padding-top: 50px;
+}
+
 .homepage {
   padding-top: 30px;
 }
-.GambarPosterUtama {
-  width: 600px;
-  height: auto;
-}
+
 .posterutama {
   margin: auto;
   text-align: center;
@@ -13,10 +35,6 @@
   font-weight: 600;
   font-size: 20px;
 }
-.kuningplay {
-  font-size: 30px;
-  color: white;
-}
 
 .JudulMovies {
   font-weight: bolder;
@@ -24,7 +42,54 @@
 
 .JudulTrendingPerson {
   color: #5a606b;
+  font-size: 18px;
+  font-weight: 700;
 }
-/* .Bintang_Rating {
-  color: #f4c10f !important;
-} */
+.JudulNowPlaying {
+  font-size: 20px;
+}
+
+.ImgCast {
+  height: 250px;
+  width: auto;
+  transition: 0.3s ease-in-out;
+}
+
+.ImgCast:hover {
+  transform: scale(1.08);
+  transition: 0.3s ease-in-out;
+}
+
+/* untuk trending movie */
+
+.movie {
+  background-color: #373b69;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  overflow: hidden;
+  width: 300px;
+}
+.movie img {
+  max-width: 100%;
+}
+
+.GambarPosterUtama {
+  width: 275px;
+  height: auto;
+}
+
+.movie-info {
+  display: flex;
+  padding: 1rem;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.movie-info h3 {
+  margin: 0;
+}
+
+.judulPoster {
+  font-size: 18px;
+}

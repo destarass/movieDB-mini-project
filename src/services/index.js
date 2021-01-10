@@ -153,7 +153,7 @@ export const fetchSimilarMovie = async (id) => {
         language: "en_US",
       },
     });
-    const posterUrl = "https://image.tmdb.org/t/p/original/ ";
+    const posterUrl = "https://image.tmdb.org/t/p/original/";
     const modifiedData = data["results"].map((m) => ({
       id: m["id"],
       backPoster: posterUrl + m["backdrop_path"],

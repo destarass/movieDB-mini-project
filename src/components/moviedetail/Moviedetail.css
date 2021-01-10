@@ -1,0 +1,32 @@
+.ButtonBuyDetail {
+  text-align: left !important;
+  margin: 0 !important;
+  margin-top: 10px !important;
+}
+.BuyButtonDetail {
+  width: 70px;
+  color: black;
+  font-weight: 1000;
+}
+
+.ImgCastDetail {
+  height: 250px;
+  width: auto;
+  transition: 0.3s ease-in-out;
+  margin: auto !important;
+  text-align: center !important;
+}
+
+.ImgCastDetail:hover {
+  transform: scale(1.08);
+  transition: 0.3s ease-in-out;
+}
+
+.JudulDetailMovie {
+  letter-spacing: 7px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bolder;
+  color: white;
+}

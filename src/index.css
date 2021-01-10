@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .list-inline-item .btn-outline-info {
   font-size: 12px;
   color: #5a606b !important;

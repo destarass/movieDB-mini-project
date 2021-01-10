@@ -13,12 +13,34 @@ import { Link } from "react-router-dom";
 
 import ReactStars from "react-rating-stars-component";
 
-export function Home() {
+export function Home({ saldo, setSaldo, owner, setOwner }) {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [genres, setGenres] = useState([]);
   const [movieByGenre, setMovieByGenre] = useState([]);
   const [persons, setPersons] = useState([]);
   const [topRated, setTopRated] = useState([]);
+
+  function getHarga(rating) {
+    if (rating <= 3 && rating >= 1) {
+      return 3500;
+    } else if (rating <= 6 && rating > 3) {
+      return 8250;
+    } else if (rating <= 8 && rating > 6) {
+      return 16350;
+    } else if (rating <= 10 && rating > 8) {
+      return 21250;
+    }
+  }
+
+  function getDot(price) {
+    var num = price;
+    var harga = num.toString();
+    for (var i = harga.length; i > 0; i = i - 3) {
+      harga = harga.slice(0, i) + "." + harga.slice(i, harga.length - 1);
+    }
+
+    return harga;
+  }
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -27,7 +49,7 @@ export function Home() {
       let tempMovieByGenre = await fetchMovieByGenre(28);
       let tempPersons = await fetchPersons();
       let tempTopRated = await fetchTopratedMovie();
-      //   console.log(tempMovies);
+
       setNowPlaying(tempMovies);
       setGenres(tempGenres);
       setMovieByGenre(await fetchMovieByGenre(28));
@@ -41,21 +63,53 @@ export function Home() {
     setMovieByGenre(await fetchMovieByGenre(genre_id));
   };
 
-  const movies = nowPlaying.slice(0, 1).map((item, index) => {
+  const movies = nowPlaying.slice(0, 4).map((item, index) => {
     return (
-      <div key={index}>
-        <div className="carousel-center">
-          <img
-            className="GambarPosterUtama"
-            src={item.backPoster}
-            alt={item.title}
-          />
+      <div className="col-md-3 " key={index}>
+        <div className="card">
+          <Link to={`/movie/${item.id}`}>
+            <img className="img-fluid" src={item.poster} alt={item.title}></img>
+            <div>
+              {owner.includes(item.id) && (
+                <button type="button" class="btn btn-success">
+                  {"Owned "}
+                </button>
+              )}
+            </div>
+          </Link>
         </div>
-        <div className="carousel-center kuningplaydiv">
-          <i className="far fa-play-circle kuningplay"></i>
-        </div>
+        <div className="mt-3">
+          <p className="JudulMovies">{item.title}</p>
+          <p>Rated: {item.rating}</p>
+          <p>Harga: Rp.{getDot(getHarga(item.rating))},00</p>
+          <ReactStars
+            className="Bintang_Rating"
+            count={item.rating}
+            size={20}
+            color={"#f4c10f"}
+          ></ReactStars>
+          <div className="ButtonBuy">
+            <button
+              type="button"
+              class="btn btn-warning text-center BuyButtom"
+              onClick={() => {
+                if (
+                  !owner.includes(item.id) &&
+                  saldo >= getHarga(item.rating)
+                ) {
+                  setSaldo(saldo - getHarga(item.rating));
 
-        <div className="carousel-caption JudulPosterUtama">{item.title}</div>
+                  var tempowner = [...owner];
+                  tempowner.push(item.id);
+                  console.log(tempowner);
+                  setOwner(tempowner);
+                }
+              }}
+            >
+              Buy
+            </button>
+          </div>
+        </div>
       </div>
     );
   });
@@ -90,20 +144,48 @@ export function Home() {
     return (
       <div className="col-md-3 col-sm-6" key={index}>
         <div className="card">
-          <Link to={`/movie/${item.id}`}>
+          <Link to={{ pathname: `/movie/${item.id}`, state: owner }}>
             <img className="img-fluid" src={item.poster} alt={item.title} />
+            <div>
+              {owner.includes(item.id) && (
+                <button type="button" class="btn btn-success">
+                  {"Owned "}
+                </button>
+              )}
+            </div>
           </Link>
         </div>
         <div className="mt-3">
           <p className="JudulMovies">{item.title}</p>
           <p>Rated: {item.rating}</p>
-          <p></p>
+          <p>Harga: Rp. {getDot(getHarga(item.rating))},00 </p>
           <ReactStars
             className="Bintang_Rating"
             count={item.rating}
             size={20}
             color={"#f4c10f"}
           ></ReactStars>
+          <div className="ButtonBuy">
+            <button
+              type="button"
+              class="btn btn-warning text-center BuyButtom"
+              onClick={() => {
+                if (
+                  !owner.includes(item.id) &&
+                  saldo >= getHarga(item.rating)
+                ) {
+                  setSaldo(saldo - getHarga(item.rating));
+
+                  var tempowner = [...owner];
+                  tempowner.push(item.id);
+                  console.log(tempowner);
+                  setOwner(tempowner);
+                }
+              }}
+            >
+              Buy
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -113,7 +195,7 @@ export function Home() {
     return (
       <div className="col-md-3 text-center" key={i}>
         <img
-          className="img-fluid rounded-circle"
+          className="img-fluid rounded-circle ImgCast"
           src={p.profileImg}
           alt={p.name}
         ></img>
@@ -134,17 +216,46 @@ export function Home() {
         <div className="card">
           <Link to={`/movie/${item.id}`}>
             <img className="img-fluid" src={item.poster} alt={item.title}></img>
+            <div>
+              {owner.includes(item.id) && (
+                <button type="button" class="btn btn-success">
+                  {"Owned "}
+                </button>
+              )}
+            </div>
           </Link>
         </div>
         <div className="mt-3">
           <p className="JudulMovies">{item.title}</p>
           <p>Rated: {item.rating}</p>
+          <p>Harga: Rp.{getHarga(item.rating)}</p>
           <ReactStars
             className="Bintang_Rating"
             count={item.rating}
             size={20}
             color={"#f4c10f"}
           ></ReactStars>
+          <div className="ButtonBuy">
+            <button
+              type="button"
+              class="btn btn-warning text-center BuyButtom"
+              onClick={() => {
+                if (
+                  !owner.includes(item.id) &&
+                  saldo >= getHarga(item.rating)
+                ) {
+                  setSaldo(saldo - getHarga(item.rating));
+
+                  var tempowner = [...owner];
+                  tempowner.push(item.id);
+                  console.log(tempowner);
+                  setOwner(tempowner);
+                }
+              }}
+            >
+              Buy
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -152,11 +263,19 @@ export function Home() {
 
   return (
     <div className="container homepage">
-      <div className="row mt-2">
-        <div className="col posterutama">{movies}</div>
-      </div>
-
       <div className="row mt-3">
+        <div className="col">
+          <p
+            className="font-weight-bold"
+            className="JudulTrendingPerson text-center"
+          >
+            NOW PLATING
+          </p>
+        </div>
+      </div>
+      <div className="row mt-2">{movies}</div>
+
+      <div className="row mt-3 judulgenre">
         <div className="col">
           <ul className="list-inline">{genreList}</ul>
         </div>
@@ -171,7 +290,7 @@ export function Home() {
 
       <div className="row mt-3">{movieList}</div>
 
-      <div className="row mt-3">
+      <div className="row mt-3 judulgenre">
         <div className="col">
           <p className="font-weight-bold" className="JudulTrendingPerson">
             TRENDING PERSONS ON THIS WEEK
@@ -188,10 +307,10 @@ export function Home() {
 
       <div className="row mt-3">{trendingPersons}</div>
 
-      <div className="row mt-3">
+      <div className="row mt-3 judulgenre">
         <div className="col">
           <p className="font-weight-bold" className="JudulTrendingPerson">
-            Top Rated Movies
+            TOP RATED MOVIES
           </p>
         </div>
       </div>
@@ -208,19 +327,9 @@ export function Home() {
 
       <div className="row mt-3 mb-5">
         <div className="col-md-8 col-sm-6" style={{ color: "#5a606b" }}>
-          <h3>ABOUT ME</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
-            dolores praesentium dolorem quod magnam mollitia distinctio vero
-            dolorum? Eum quibusdam nihil rem sunt recusandae quaerat voluptas
-            ducimus veritatis distinctio sed.
-          </p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi
-            qui quia enim, quibusdam pariatur ratione suscipit? Beatae officia
-            fugiat eligendi placeat tempora cumque error dolorum laborum ab,
-            expedita vitae. Dolores.
-          </p>
+          <h3>About Me</h3>
+          <p>StreamFlix is a digital streaming media service provider</p>
+
           <ul className="list-inline">
             <li className="list-inline-item">
               <a href="/" style={{ color: "#f4c10f" }}>
