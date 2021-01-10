@@ -269,7 +269,7 @@ export function Home({ saldo, setSaldo, owner, setOwner }) {
             className="font-weight-bold"
             className="JudulTrendingPerson text-center"
           >
-            NOW PLATING
+            NOW PLAYING
           </p>
         </div>
       </div>
